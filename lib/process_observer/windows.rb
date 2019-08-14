@@ -23,7 +23,7 @@ module ProcessObserver
 
       hash.map do |key, value|
         case value
-          when TrueClass, FalseClass # Boolean
+          when TrueClass, FalseClass, NilClass # Boolean or nil
             value ? "/#{key}" : ""
           when String
             raise Exceptions::SpecialCharacterError, "Please don't use double quotes in string", caller if value.include?('"')
@@ -55,17 +55,20 @@ module ProcessObserver
       call_params[:svc]  = !!options[:svc]
       call_params[:apps] = !!options[:apps]
       call_params[:v]    = !!options[:v]
-      call_params[:m]    = case 
-        when options[:m].nil? then nil
-        when options[:m] == true then true
-        else options[:m].to_s
+      case 
+        when options[:m].nil?    then call_params[:m] = nil
+        when options[:m] == true then call_params[:m] = true
+        else call_params[:m] = options[:m].to_s
       end
       call_params[:fi]   = options[:fi].to_s unless options[:fi].nil?
 
       call_params[:fo]   = options[:fo] || :csv
       raise ArgumentError, "Unknown format option #{call_params[:fo]}", caller unless [:csv, :table, :list].include?(call_params[:fo])
 
-      re = call_params.empty? ? `#{EXE}` : `#{EXE} #{to_arg(call_params)}`.chomp
+      Log.debug "Call parameters: #{call_params}"
+      command = call_params.empty? ? "#{EXE}" : "#{EXE} #{to_arg(call_params)}"
+      Log.debug "Executing: #{command}"
+      re = `#{command}`.chomp
       if call_params[:fo] == :csv
         csv = CSV.parse(re)
         enum = csv.to_a.drop(1) # Skip header

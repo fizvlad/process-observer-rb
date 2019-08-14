@@ -80,16 +80,16 @@ module ProcessObserver
     def initialize(options)
       @image_name   = options[:image_name].to_s
       @pid          = options[:pid].to_i
-      @session_name = options[:session_name].to_s if options[:session_name]
-      @session      = options[:session].to_i if options[:session]
-      @mem_usage    = options[:mem_usage].gsub(/\s+/, "").to_i if options[:mem_usage]
-      @status       = options[:status].to_s if options[:status]
-      @user_name    = options[:user_name].to_s if options[:user_name]
-      @cpu_time     = options[:cpu_time].to_s if options[:cpu_time]
-      @window_title = options[:window_title].to_s if options[:window_title]
-      @services     = options[:services] ? options[:services].to_s.split(",") : []
-      @modules      = options[:modules] ? options[:modules].to_s.split(",") : []
-      @package_name = options[:package_name].to_s if options[:package_name]
+      @session_name = options[:session_name] ? options[:session_name].to_s                   : nil
+      @session      = options[:session]      ? options[:session].to_i                        : nil
+      @mem_usage    = options[:mem_usage]    ? options[:mem_usage].to_s.gsub(/\s+/, "").to_i : nil
+      @status       = options[:status]       ? options[:status].to_s                         : nil
+      @user_name    = options[:user_name]    ? options[:user_name].to_s                      : nil
+      @cpu_time     = options[:cpu_time]     ? options[:cpu_time].to_s                       : nil
+      @window_title = options[:window_title] ? options[:window_title].to_s                   : nil
+      @services     = options[:services]     ? options[:services].to_s.split(",")            : []
+      @modules      = options[:modules]      ? options[:modules].to_s.split(",")             : []
+      @package_name = options[:package_name] ? options[:package_name].to_s                   : nil
     end
 
     ##

@@ -1,9 +1,3 @@
-require_relative "./exceptions"
-require_relative "./process"
-require_relative "./os"
-require_relative "./windows"
-require_relative "./linux"
-
 module ProcessObserver
 
   ##
