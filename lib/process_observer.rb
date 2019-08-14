@@ -1,6 +1,6 @@
 require "process_observer/version"
+require "process_observer/exceptions"
 
-module ProcessObserver
-  class Error < StandardError; end
-  # Your code goes here...
-end
+##
+# Module containing everything.
+module ProcessObserver; end
