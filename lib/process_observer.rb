@@ -1,5 +1,5 @@
-require "process_observer/version"
-require "process_observer/exceptions"
+require_relative "./process_observer/version"
+require_relative "./process_observer/main"
 
 ##
 # Module containing everything.
