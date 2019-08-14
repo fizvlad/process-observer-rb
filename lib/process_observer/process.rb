@@ -128,7 +128,68 @@ module ProcessObserver
   # Class representing process in Unix.
   class LinuxProcess < Process
 
-    # TODO
+    ##
+    # @return [String] command which launched process.
+    attr_reader :comm
+
+    ##
+    # @return [Integer] process ID.
+    attr_reader :pid
+
+    ##
+    # @return [String, nil] process status.
+    attr_reader :stat
+
+    ##
+    # @return [String, nil] amount of time process is running.
+    attr_reader :time
+
+    ##
+    # @return [Integer, nil] amount of used CPU memory in KB.
+    attr_reader :rss
+
+    ##
+    # Initialize new process.
+    #
+    # @param options [Hash]
+    #
+    # @option options [String] comm command which launched process.
+    # @option options [Integer] pid process ID.
+    # @option options [String, nil] stat process status.
+    # @option options [String, nil] time amount of time process is running.
+    # @option options [Integer, nil] rss amount of used CPU memory in KB.
+    def initialize(options)
+      @comm = options[:comm].to_s
+      @pid  = options[:pid].to_i
+      @stat = options[:stat] ? options[:stat].to_s : nil
+      @time = options[:time] ? options[:time].to_s : nil
+      @rss  = options[:rss]  ? options[:rss].to_i  : nil
+    end
+
+    ##
+    # @return [String] PID and command of process.
+    def to_s
+      "Process ##{@pid} #{@comm}"
+    end
+
+    ##
+    # Inspect all stored data.
+    #
+    # @param [String] splitter
+    #
+    # @return [String] all accessable info in human-readable form.
+    def inspect(splitter = "; ")
+      to_s +
+      (@stat ? "#{splitter}Status: #{@stat}" : "") +
+      (@time ? "#{splitter}Time running: #{@time}" : "") +
+      (@rss ? "#{splitter}Memory: #{@rss} KB" : "")
+    end
+
+    ##
+    # Compare with other process by PID.
+    def ==(other)
+      LinuxProcess === other && other.pid == @pid
+    end
 
   end
 

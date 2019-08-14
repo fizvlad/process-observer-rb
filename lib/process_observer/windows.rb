@@ -7,7 +7,7 @@ module ProcessObserver
   module Windows
 
     ##
-    # Task list executable
+    # Task list executable.
     EXE = "tasklist"
 
     ##
@@ -36,9 +36,9 @@ module ProcessObserver
     end
 
     ##
-    # Call task list executable with provided options
+    # Call task list executable with provided options.
     #
-    # @param options [Hash] hash with call options
+    # @param options [Hash] hash with call options.
     #
     # @option options [Boolean] svc (false) return services for each process.
     # @option options [Boolean] apps (false) return store processes.

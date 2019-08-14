@@ -7,9 +7,9 @@ module ProcessObserver
   def self.all
     case
       when OS.windows?
-        # TODO
-      when OS.unix?
-        # TODO
+        Windows.call
+      when OS.linux?
+        Linux.call
       else
         raise UnsupportedPlatformError, "This platform is currently unsupported", caller
     end
@@ -22,9 +22,9 @@ module ProcessObserver
   def self.running
     case
       when OS.windows?
-        # TODO
-      when OS.unix?
-        # TODO
+        Windows.call(fi: "STATUS eq RUNNING")
+      when OS.linux?
+        Linux.call.select { |process| process.include?("R") }
       else
         raise UnsupportedPlatformError, "This platform is currently unsupported", caller
     end
