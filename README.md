@@ -7,7 +7,7 @@ console applications. Currently it is `tasklist` for Windows and `ps` for Linux.
 
 You can install this gem executing `gem install process_observer` in console.
 
-Then simply include it with `include "process_observer"`
+Then simply require it with `require "process_observer"`.
 
 ## Usage
 
