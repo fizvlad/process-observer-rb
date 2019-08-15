@@ -1,38 +1,21 @@
 # ProcessObserver
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/process_observer`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This small gem may be used to obtain information about processes suing OS specific 
+console applications. Currently it is `tasklist` for Windows and `ps` for Linux.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+You can install this gem executing `gem install process_observer` in console.
 
-```ruby
-gem 'process_observer'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install process_observer
+Then simply include it with `include "process_observer"`
 
 ## Usage
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+You can find documentation here: https://www.rubydoc.info/gems/process_observer.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/process_observer.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fizvlad/process_observer/issues.
 
 ## License
 
