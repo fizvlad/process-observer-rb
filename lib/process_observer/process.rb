@@ -4,7 +4,31 @@ module ProcessObserver
   # Class representing process.
   class Process
 
-    # TODO
+    ##
+    # @return [String] name name of the executable or command.
+    attr_reader :name
+
+    ##
+    # @return [Integer] pid process ID.
+    attr_reader :pid
+
+    ##
+    # @return [Integer, nil] memory amount of consumed memory.
+    attr_reader :memory
+
+    ##
+    # Initialize new process.
+    #
+    # @param options [Hash]
+    #
+    # @option options [String] name name of the executable or command.
+    # @option options [Integer] pid process ID.
+    # @option options [Integer, nil] memory amount of consumed memory.
+    def initialize(options)
+      @name   = options[:image_name].to_s
+      @pid    = options[:pid].to_i
+      @memory = options[:memory] ? options[:memory].to_i : nil
+    end
 
   end
 
@@ -80,16 +104,22 @@ module ProcessObserver
     def initialize(options)
       @image_name   = options[:image_name].to_s
       @pid          = options[:pid].to_i
-      @session_name = options[:session_name] ? options[:session_name].to_s                   : nil
-      @session      = options[:session]      ? options[:session].to_i                        : nil
-      @mem_usage    = options[:mem_usage]    ? options[:mem_usage].to_s.gsub(/\s+/, "").to_i : nil
-      @status       = options[:status]       ? options[:status].to_s                         : nil
-      @user_name    = options[:user_name]    ? options[:user_name].to_s                      : nil
-      @cpu_time     = options[:cpu_time]     ? options[:cpu_time].to_s                       : nil
-      @window_title = options[:window_title] ? options[:window_title].to_s                   : nil
-      @services     = options[:services]     ? options[:services].to_s.split(",")            : []
-      @modules      = options[:modules]      ? options[:modules].to_s.split(",")             : []
-      @package_name = options[:package_name] ? options[:package_name].to_s                   : nil
+      @session_name = options[:session_name] ? options[:session_name].to_s                     : nil
+      @session      = options[:session]      ? options[:session].to_i                          : nil
+      @mem_usage    = options[:mem_usage]    ? options[:mem_usage].to_s.gsub(/[^\d]/, "").to_i : nil
+      @status       = options[:status]       ? options[:status].to_s                           : nil
+      @user_name    = options[:user_name]    ? options[:user_name].to_s                        : nil
+      @cpu_time     = options[:cpu_time]     ? options[:cpu_time].to_s                         : nil
+      @window_title = options[:window_title] ? options[:window_title].to_s                     : nil
+      @services     = options[:services]     ? options[:services].to_s.split(",")              : []
+      @modules      = options[:modules]      ? options[:modules].to_s.split(",")               : []
+      @package_name = options[:package_name] ? options[:package_name].to_s                     : nil
+
+      super(
+        name: @image_name,
+        pid: @pid,
+        memory: @mem_usage
+      )
     end
 
     ##
@@ -164,6 +194,12 @@ module ProcessObserver
       @stat = options[:stat] ? options[:stat].to_s : nil
       @time = options[:time] ? options[:time].to_s : nil
       @rss  = options[:rss]  ? options[:rss].to_i  : nil
+
+      super(
+        name: @comm,
+        pid: @pid,
+        memory: @rss
+      )
     end
 
     ##

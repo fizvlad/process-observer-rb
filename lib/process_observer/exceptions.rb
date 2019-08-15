@@ -12,6 +12,14 @@ module ProcessObserver
     # This platform is currently unsupported.
     class UnsupportedPlatformError < ArgumentError; end
 
+    ##
+    # Expected to see single process.
+    class MultipleProcessError < RuntimeError; end
+
+    ##
+    # UTF-8 encoding is required.
+    class EncodingError < RuntimeError; end
+
   end
 
   include Exceptions

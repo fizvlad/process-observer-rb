@@ -51,6 +51,8 @@ module ProcessObserver
     #
     # @return [String, Array<Process>] call output
     def self.call(options = {})
+      raise EncodingError, "Please use `chcp 65001` to switch to UTF-8 first" if `chcp`.slice(/\d+/).to_i != 65001
+
       call_params = {}
       call_params[:svc]  = !!options[:svc]
       call_params[:apps] = !!options[:apps]
@@ -69,6 +71,7 @@ module ProcessObserver
       command = call_params.empty? ? "#{EXE}" : "#{EXE} #{to_arg(call_params)}"
       Log.debug "Executing: #{command}"
       re = `#{command}`.chomp
+
       if call_params[:fo] == :csv
         csv = CSV.parse(re)
         enum = csv.to_a.drop(1) # Skip header
