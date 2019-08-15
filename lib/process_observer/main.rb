@@ -33,9 +33,17 @@ module ProcessObserver
   ##
   # Requests info about current Ruby process.
   #
-  # @return [Process]
-  def self.this
+  # @param process_list [Array<Process>, nil] previously saved array of processes 
+  #   or +nil+ if you want to request all processes in this method.
+  #
+  # @return [Process, nil] +nil+ may be returned if process not found in provided process list.
+  def self.this(process_list = nil)
     pid = ::Process.pid
+
+    if process_list
+      return process_list.find { |process| process.pid == pid }
+    end
+
     case
       when OS.windows?
         arr = Windows.call(fi: "PID eq #{pid}")
@@ -49,9 +57,15 @@ module ProcessObserver
   end
 
   ##
+  # Get total used memory.
+  #
+  # @param process_list [Array<Process>, nil] previously saved array of processes 
+  #   or +nil+ if you want to request all processes in this method.
+  #
   # @return [Integer] used memory in KB.
-  def self.used_memory
-    self.all.sum(0, &:memory)
+  def self.used_memory(process_list = nil)
+    arr = process_list ? process_list : self.all
+    arr.sum(0, &:memory)
   end
 
 end
